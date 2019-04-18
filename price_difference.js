@@ -22,18 +22,14 @@ if (table) {
       var newHeaderSellDiff = document.createElement("th");
       newHeaderSellDiff.innerText = "BidDiffs";
       row.appendChild(newHeaderSellDiff);
-
-      var newHeaderSellDiffPer = document.createElement("th");
-      newHeaderSellDiffPer.innerText = "BidDiffsPer";
-      row.appendChild(newHeaderSellDiffPer);
     } else {
       buyNow = parseInt(tags[4].innerText);
       sellNow = parseInt(tags[5].innerText);
-      diff = buyNow - sellNow;
+      diff = (buyNow*0.9) - sellNow;
       percentage = diff / sellNow;
 
       var newDiff = document.createElement("td");
-      newDiff.innerText = diff;
+      newDiff.innerText = Math.round(diff);
       row.appendChild(newDiff);
 
       var newPer = document.createElement("td");
@@ -51,12 +47,12 @@ if (table) {
           const runner_up_order = orders[2].getElementsByTagName("td")[1].innerText.replace(",", "").match(/\d+/)[0];
 
           var sellDiff = document.createElement("td");
-          sellDiff.innerText = runner_up_order - top_order;
+          const profit = Math.round((runner_up_order*0.9) - top_order)
+          sellDiff.innerText = profit;
+          if (profit > 0) {
+            sellDiff.style.cssText = "background-color:#b3ffb3";
+          }
           this.this_row.appendChild(sellDiff);
-
-          var sellDiffPer = document.createElement("td");
-          sellDiffPer.innerText = Math.round(((runner_up_order - top_order) / this.this_buy_now)*100) + "%";
-          this.this_row.appendChild(sellDiffPer);
         }
       });
     }

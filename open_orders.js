@@ -14,16 +14,27 @@ const analyze_orders = (widget, isBuyOrder=false, isSellOrder=false) => {
       } else {
         link = row.children[0].getElementsByTagName("a")[0].href;
 
+        const current_price = row.children[1].innerText.replace(",", "").match(/\d+/)[0];
+
         $.ajax({
           url: link,
           this_row: row,
+          this_price: current_price,
           success: function(data) {
             var topPrice = document.createElement("td");
+            var price;
             const widgets = $(data).find(".create-order-widget-aside");
             if (isBuyOrder) {
-              topPrice.innerText = widgets[1].innerText.replace(",", "").match(/\d+/)[0];
+              price = widgets[1].innerText.replace(",", "").match(/\d+/)[0];
             } else if (isSellOrder) {
-              topPrice.innerText = widgets[0].innerText.replace(",", "").match(/\d+/)[0];
+              price = widgets[0].innerText.replace(",", "").match(/\d+/)[0];
+            }
+
+            topPrice.innerText = price;
+            if (current_price !== price) {
+              topPrice.style.cssText = "background-color:#ffb3b3";
+            } else {
+              topPrice.style.cssText = "background-color:#b3ffb3";
             }
             this.this_row.appendChild(topPrice);
           }
