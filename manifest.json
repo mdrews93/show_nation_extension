@@ -5,12 +5,20 @@
 
   "content_scripts": [
     {
-      "js": ["thirdparty/jquery-3.4.0.js", "price_difference.js"],
+      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2019/price_difference.js"],
       "matches": ["https://mlb19.theshownation.com/community_market*"]
     },
     {
-      "js": ["thirdparty/jquery-3.4.0.js", "open_orders.js"],
+      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2019/open_orders.js"],
       "matches": ["https://mlb19.theshownation.com/community_market/orders/open*"]
+    },
+    {
+      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2020/utils.js", "src/mlb2020/open_orders.js"],
+      "matches": ["https://theshownation.com/mlb20/orders/open_orders*"]
+    },
+    {
+      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2020/price_difference.js"],
+      "matches": ["https://theshownation.com/mlb20/community_market*"]
     }
   ]
 }
