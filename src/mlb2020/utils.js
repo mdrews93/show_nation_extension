@@ -13,9 +13,12 @@ globalThis.addTopBidToTable = (table, type) => {
       if (i === 0) {
         addHeaderToRow(document, row, 'Top Bid');
         addHeaderToRow(document, row, 'Runner Up');
+        addHeaderToRow(document, row, 'Profit');
+        addHeaderToRow(document, row, 'Diff/SellNow');
       } else {
         addTopBidToRow(document, row, type);
         addRunnerUpToRow(document, row, type);
+        addProfitInfoToRow(document, row);
       }
     };
   }
@@ -48,7 +51,7 @@ const addTopBidToRow = (document, row, type) => {
       } else if (type === tableType.SellOrders) {
         table = $(data).find('table#table-buy-now')[0];
       }
-      const price = table.rows[1].children[1].innerText.match(/\d+/)[0];
+      const price = table.rows[1].children[1].innerText.replace(",", "").match(/\d+/)[0];
 
       topPriceElt.innerText = price;
       if (currentPrice !== price) {
@@ -70,7 +73,7 @@ const addRunnerUpToRow = (document, row, type) => {
     this_row: row,
     this_price: currentPrice,
     success: function(data) {
-      const topPriceElt = document.createElement('td');
+      const runnerUpElt = document.createElement('td');
       let table;
 
       if (type === tableType.BuyOrders) {
@@ -78,15 +81,44 @@ const addRunnerUpToRow = (document, row, type) => {
       } else if (type === tableType.SellOrders) {
         table = $(data).find('table#table-buy-now')[0];
       }
-      const price = table.rows[2].children[1].innerText.match(/\d+/)[0];
+      const price = table.rows[2].children[1].innerText.replace(",", "").match(/\d+/)[0];
 
-      topPriceElt.innerText = price;
+      runnerUpElt.innerText = price;
       if (Math.abs(price - currentPrice) === 1) {
-        topPriceElt.style.cssText = 'background-color:#b3ffb3';
+        runnerUpElt.style.cssText = 'background-color:#b3ffb3';
       } else {
-        topPriceElt.style.cssText = 'background-color:#ffb3b3';
+        runnerUpElt.style.cssText = 'background-color:#ffb3b3';
       }
-      this.this_row.appendChild(topPriceElt);
+      this.this_row.appendChild(runnerUpElt);
+    },
+  });
+};
+
+const addProfitInfoToRow = (document, row) => {
+  const link = getLinkFromRow(row);
+  const currentPrice = getPriceFromRow(row);
+
+  $.ajax({
+    url: link,
+    this_row: row,
+    this_price: currentPrice,
+    success: function(data) {
+      const profitElt = document.createElement('td');
+      const percentageElt = document.createElement('td');
+
+      const sellNowTable = $(data).find('table#table-sell-now')[0];
+      const buyNowTable = $(data).find('table#table-buy-now')[0];
+    
+      const buyNowprice = buyNowTable.rows[1].children[1].innerText.replace(",", "").match(/\d+/)[0];
+      const sellNowprice = sellNowTable.rows[1].children[1].innerText.replace(",", "").match(/\d+/)[0];
+
+      const profit = (buyNowprice*0.9) - sellNowprice;
+      const percentage = profit / sellNowprice;
+      profitElt.innerText = Math.round(profit);
+      percentageElt.innerText = Math.round(percentage*100) + '%';
+
+      this.this_row.appendChild(profitElt);
+      this.this_row.appendChild(percentageElt);
     },
   });
 };
@@ -94,6 +126,6 @@ const addRunnerUpToRow = (document, row, type) => {
 const getLinkFromRow = (row) => row.getElementsByTagName('a')[0].href;
 
 const getPriceFromRow = (row) => {
-  return row.children[2].innerText.match(/\d+/)[0];
+  return row.children[2].innerText.replace(",", "").match(/\d+/)[0];
 };
 
