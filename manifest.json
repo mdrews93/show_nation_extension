@@ -5,20 +5,78 @@
 
   "content_scripts": [
     {
-      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2019/price_difference.js"],
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2019/price_difference.js"
+      ],
       "matches": ["https://mlb19.theshownation.com/community_market*"]
     },
     {
       "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2019/open_orders.js"],
-      "matches": ["https://mlb19.theshownation.com/community_market/orders/open*"]
+      "matches": [
+        "https://mlb19.theshownation.com/community_market/orders/open*"
+      ]
     },
     {
-      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2020/utils.js", "src/mlb2020/open_orders.js"],
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2020/utils.js",
+        "src/mlb2020/open_orders.js"
+      ],
       "matches": ["https://theshownation.com/mlb20/orders/open_orders*"]
     },
     {
-      "js": ["src/thirdparty/jquery-3.4.0.js", "src/mlb2020/price_difference.js"],
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2020/price_difference.js"
+      ],
       "matches": ["https://theshownation.com/mlb20/community_market*"]
+    },
+    {
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2021/utils.js",
+        "src/mlb2021/open_buy_orders.js"
+      ],
+      "matches": ["https://mlb21.theshow.com/orders/buy_orders*"]
+    },
+    {
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2021/utils.js",
+        "src/mlb2021/open_sell_orders.js"
+      ],
+      "matches": ["https://mlb21.theshow.com/orders/sell_orders*"]
+    },
+    {
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2021/price_difference.js"
+      ],
+      "matches": ["https://mlb21.theshow.com/community_market*"]
+    },
+    {
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2022/utils.js",
+        "src/mlb2022/open_buy_orders.js"
+      ],
+      "matches": ["https://mlb22.theshow.com/orders/buy_orders*"]
+    },
+    {
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2022/utils.js",
+        "src/mlb2022/open_sell_orders.js"
+      ],
+      "matches": ["https://mlb22.theshow.com/orders/sell_orders*"]
+    },
+    {
+      "js": [
+        "src/thirdparty/jquery-3.4.0.js",
+        "src/mlb2022/price_difference.js"
+      ],
+      "matches": ["https://mlb22.theshow.com/community_market*"]
     }
   ]
 }
